@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>调用接口</title>
+    <meta charset="UTF-8">
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> <!--引入jQuery库-->
+    <style>
+        body {
+        background-color: #f1f1f1;
+        font-family: Arial, sans-serif;
+        }
+
+        	.container {
+        		max-width: 600px;
+        		margin: 0 auto;
+        		padding: 20px;
+        		background-color: #fff;
+        		box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        		border-radius: 5px;
+        	}
+
+        	h1 {
+        		text-align: center;
+        		color: #333;
+        	}
+
+        	input[type=text] {
+        		width: 100%;
+        		padding: 12px 20px;
+        		margin: 8px 0;
+        		box-sizing: border-box;
+        		border: 2px solid #ccc;
+        		border-radius: 4px;
+        		background-color: #f8f8f8;
+        		font-size: 16px;
+        	}
+
+        	.button {
+        		background-color: #4CAF50;
+        		color: white;
+        		padding: 14px 20px;
+        		margin: 8px 0;
+        		border: none;
+        		border-radius: 6px;
+        		cursor: pointer;
+        		width: 100%;
+        		font-size: 16px;
+        	}
+
+        	.button:hover {
+        		background-color: #45a049;
+        	}
+
+        	textarea {
+        		width: 100%;
+        		height: 200px;
+        		padding: 12px 20px;
+        		margin: 8px 0;
+        		box-sizing: border-box;
+        		border: 2px solid #ccc;
+        		border-radius: 4px;
+        		background-color: #f8f8f8;
+        		font-size: 16px;
+        	}
+
+</style>
+</head>
+
+
+<body>
+<div class="container">
+
+	<h1>基于本地知识库问答</h1>
+    <label for="input-box"><b>请输入提问:</b></label>
+
+    <input type="text" placeholder="请输入内容" name="input-box" id="input-box" id="input" required>
+
+    <button type="submit" class="button" onclick="callApi()">点击发送</button>
+
+    <p></p>
+	<!--添加一个文本框-->
+	<textarea name="text-area" id="result" placeholder="生成结果区域..."></textarea>
+</div>
+
+</body>
+
+	<script>
+		function callApi(){
+            $('#result').val("正在生成...");
+			var inputVal = $('#input-box').val(); //获取input的值
+			var form = new FormData();
+            form.append("input", inputVal);
+            var settings = {
+              "url": "http://127.0.0.1:8000/knowledge/",
+              "method": "POST",
+              "timeout": 0,
+              "processData": false,
+              "mimeType": "multipart/form-data",
+              "contentType": false,
+              "data": form
+            };
+
+            $.ajax(settings).done(function (response) {
+              console.log(response);
+              $('#result').val(JSON.stringify(response));
+              alert("请求成功！"); //弹出提示框
+            }).fail(function(jqXHR, textStatus, errorThrown) {
+              console.log("AJAX Request failed: " + textStatus + ", " + errorThrown);
+              alert("请求失败！"); //弹出提示框
+              $('#result').val("");
+            });
+		}
+	</script>
+</html>
