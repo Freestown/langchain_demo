@@ -10,6 +10,10 @@ from langchain.vectorstores import Chroma
 from langchain import OpenAI, SQLDatabase, SQLDatabaseChain
 
 
+def assets(request):
+    return render(request, 'ask.html')
+
+
 # 常规问答
 @api_view(['POST'])
 def play(request):

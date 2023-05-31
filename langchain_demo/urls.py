@@ -19,6 +19,7 @@ from django.urls import path
 from play import views
 
 urlpatterns = [
+    path("ask/", views.ask),
     path("admin/", admin.site.urls),
     path("play/", views.play),
     path("database/", views.database),
