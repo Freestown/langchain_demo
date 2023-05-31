@@ -21,6 +21,7 @@ from play import views
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("play/", views.play),
+    path("database/", views.database),
     path("knowledge/", views.knowledge)
 
 ]
